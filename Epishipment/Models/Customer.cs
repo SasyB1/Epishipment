@@ -1,9 +1,25 @@
 ﻿namespace Epishipment.Models
 {
+
+   public enum CustomerType
+    {
+        Private,
+        Business
+    }
     public class Customer
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Email { get; set; }
+        public int CustomerId { get; set; }
+
+        public string CustomerName { get; set; }
+
+        public string CustomerSurname { get; set; }
+
+        public string CustomerBusinessName { get; set; }
+
+        public string CustomerTaxIdCode { get; set; }
+
+        public string CustomerVATNumber { get; set; }
+
+        public CustomerType CustomerType { get; set; }
     }
 }
