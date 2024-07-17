@@ -18,8 +18,10 @@
 
         public string CustomerTaxIdCode { get; set; }
 
-        public string CustomerVATNumber { get; set; }
+        public string? CustomerVATNumber { get; set; }
 
         public CustomerType CustomerType { get; set; }
+
+        public int UserId { get; set; }
     }
 }
