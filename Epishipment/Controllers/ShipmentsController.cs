@@ -15,8 +15,9 @@ namespace Epishipment.Controllers
         }
 
         public IActionResult Index()
-        { 
-            return View();
+        {
+            var allShipments = _shipmentService.GetShipments();
+            return View(allShipments);
         }
 
         public IActionResult _GetShipments()
