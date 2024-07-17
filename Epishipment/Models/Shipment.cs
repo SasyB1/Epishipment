@@ -11,10 +11,9 @@
 
         public decimal ShipmentPrice { get; set; }
 
-        public DateTime SipmentDateExpected { get; set; }
+        public DateTime ShipmentDateExpected { get; set; }
 
         public string ShipmentNumber { get; set; }
-
 
     }
 }
