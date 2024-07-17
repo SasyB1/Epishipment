@@ -1,5 +1,6 @@
 ﻿using Epishipment.Services;
 using Microsoft.AspNetCore.Mvc;
+using Epishipment.Models;
 
 namespace Epishipment.Controllers
 {
@@ -14,12 +15,21 @@ namespace Epishipment.Controllers
         }
 
         public IActionResult Index()
-        {
+        { 
             return View();
         }
-        public IActionResult BackOffice()
+
+        public IActionResult _GetShipments()
         {
-            return View();
+            List<Shipment> allShipments = _shipmentService.GetShipments();
+            if (allShipments == null)
+            {
+                allShipments = new List<Shipment>();
+            }
+            return PartialView("_GetShipments", allShipments);
         }
+
+       
+
     }
 }

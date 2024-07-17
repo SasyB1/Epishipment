@@ -101,19 +101,24 @@ namespace Epishipment.Services
         public List<Shipment> GetShipments()
         {
             List<Shipment> shipments = new List<Shipment>();
+
             try
             {
-                using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+                string connectionString = _config.GetConnectionString("DefaultConnection");
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    const string SELECT_ALL_CMD = "SELECT ShipmentId, CustomerId, ShipmentDate, ShipmentDestinationCity, ShipmentNumber, ShipmentWeight, ShipmentPrice, ShipmentDateExpected FROM Shipments";
+
+                    string SELECT_ALL_CMD = "SELECT ShipmentId, CustomerId, ShipmentDate, ShipmentDestinationCity, ShipmentNumber, ShipmentWeight, ShipmentPrice, ShipmentDateExpected FROM Shipments";
+
                     using (SqlCommand cmd = new SqlCommand(SELECT_ALL_CMD, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                shipments.Add(new Shipment
+                                Shipment shipment = new Shipment
                                 {
                                     ShipmentId = reader.GetInt32(0),
                                     CustomerId = reader.GetInt32(1),
@@ -123,7 +128,9 @@ namespace Epishipment.Services
                                     ShipmentWeight = reader.GetDecimal(5),
                                     ShipmentPrice = reader.GetDecimal(6),
                                     ShipmentDateExpected = reader.GetDateTime(7)
-                                });
+                                };
+
+                                shipments.Add(shipment);
                             }
                         }
                     }
@@ -133,8 +140,10 @@ namespace Epishipment.Services
             {
                 throw new Exception("Si è verificato un errore durante il tentativo di recuperare le spedizioni", ex);
             }
+
             return shipments;
         }
+
 
 
         public List<Shipment> GetShipmentsByDate(DateTime date)

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Epishipment.Models.Shipment>
+
+@if (Model != null && Model.Any())
+{
+   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentWeight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentDestinationCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentDateExpected)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentNumber)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentWeight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentDestinationCity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentDateExpected)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentNumber)
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No shipments available.</p>
+}
