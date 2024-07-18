@@ -98,7 +98,7 @@ namespace Epishipment.Services
             return null;
         }
 
-        public List<Shipment> GetShipments()
+        public IEnumerable<Shipment> GetShipments()
         {
             List<Shipment> shipments = new List<Shipment>();
 
@@ -143,8 +143,6 @@ namespace Epishipment.Services
 
             return shipments;
         }
-
-
 
         public List<Shipment> GetShipmentsByDate(DateTime date)
         {

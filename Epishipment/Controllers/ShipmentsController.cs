@@ -16,21 +16,18 @@ namespace Epishipment.Controllers
 
         public IActionResult Index()
         {
-            var allShipments = _shipmentService.GetShipments();
-            return View(allShipments);
+           
+            return View();
         }
 
         public IActionResult _GetShipments()
         {
-            List<Shipment> allShipments = _shipmentService.GetShipments();
-            if (allShipments == null)
-            {
-                allShipments = new List<Shipment>();
-            }
+            IEnumerable<Shipment> allShipments = _shipmentService.GetShipments();
             return PartialView("_GetShipments", allShipments);
         }
 
-       
+
+
 
     }
 }

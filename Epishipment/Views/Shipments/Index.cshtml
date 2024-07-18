@@ -1,20 +1,30 @@
-﻿@model List<Epishipment.Models.Shipment>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
 <h2>Index</h2>
 
-@Html.Partial("_GetShipments")
+<div id="shipments-container">
+    <p>Caricamento...</p>
+</div>
 
-
-
-
-
-
-
-
-
-
-
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('@Url.Action("_GetShipments", "Shipments")')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Problema col caricamento');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('shipments-container').innerHTML = data;
+                })
+                .catch(error => {
+                    document.getElementById('shipments-container').innerHTML = '<p>Errore nel caricamento degli ordini.</p>';
+                    
+                });
+        });
+    </script>
+}
