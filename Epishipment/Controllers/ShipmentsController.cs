@@ -26,7 +26,12 @@ namespace Epishipment.Controllers
             return PartialView("_GetShipments", allShipments);
         }
 
-
+        public IActionResult _GetShipment(int shipmentId)
+        {
+            Shipment shipment = _shipmentService.GetShipment(shipmentId);
+            return PartialView("_GetShipment", shipment);
+            
+        }
 
 
     }

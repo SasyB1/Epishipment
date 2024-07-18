@@ -1,0 +1,35 @@
+﻿@model Epishipment.Models.Shipment
+
+@if (Model != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ShipmentId</th>
+                <th>CustomerId</th>
+                <th>ShipmentDate</th>
+                <th>ShipmentDestinationCity</th>
+                <th>ShipmentNumber</th>
+                <th>ShipmentWeight</th>
+                <th>ShipmentPrice</th>
+                <th>ShipmentDateExpected</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.ShipmentId</td>
+                <td>@Model.CustomerId</td>
+                <td>@Model.ShipmentDate</td>
+                <td>@Model.ShipmentDestinationCity</td>
+                <td>@Model.ShipmentNumber</td>
+                <td>@Model.ShipmentWeight</td>
+                <td>@Model.ShipmentPrice</td>
+                <td>@Model.ShipmentDateExpected</td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nessuna spedizione trovata per l'ID fornito.</p>
+}

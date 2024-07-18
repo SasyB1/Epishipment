@@ -4,27 +4,71 @@
 
 <h2>Index</h2>
 
+<div>
+    <button id="btn-all-shipments">Tutte le Spedizioni</button>
+    <button id="btn-search-shipment">Cerca Spedizione per ID</button>
+    <input type="text" id="shipment-id-input" placeholder="Inserisci ID spedizione" style="display: none;" />
+    <button id="btn-submit-search" style="display: none;">Cerca</button>
+</div>
+
+
+
 <div id="shipments-container">
-    <p>Caricamento...</p>
+    <p>Scegli cosa filtrare.</p>
 </div>
 
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('@Url.Action("_GetShipments", "Shipments")')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Problema col caricamento');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    document.getElementById('shipments-container').innerHTML = data;
-                })
-                .catch(error => {
-                    document.getElementById('shipments-container').innerHTML = '<p>Errore nel caricamento degli ordini.</p>';
-                    
-                });
+            const btnAllShipments = document.getElementById("btn-all-shipments");
+            const btnSearchShipment = document.getElementById("btn-search-shipment");
+            const shipmentIdInput = document.getElementById("shipment-id-input");
+            const btnSubmitSearch = document.getElementById("btn-submit-search");
+
+            btnAllShipments.addEventListener("click", function () {
+                fetch('@Url.Action("_GetShipments", "Shipments")')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Problema col caricamento');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById('shipments-container').innerHTML = data;
+                        shipmentIdInput.style.display = 'none';
+                        btnSubmitSearch.style.display = 'none';
+                    })
+                    .catch(error => {
+                        document.getElementById('shipments-container').innerHTML = '<p>Errore nel caricamento degli ordini.</p>';
+                    });
+            });
+
+            btnSearchShipment.addEventListener("click", function () {
+                shipmentIdInput.style.display = 'block';
+                btnSubmitSearch.style.display = 'block';
+            });
+
+            btnSubmitSearch.addEventListener("click", function () {
+
+                const shipmentId = shipmentIdInput.value;
+                if (shipmentId) {
+                    fetch('@Url.Action("_GetShipment", "Shipments")' + '?shipmentId=' + shipmentId)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Problema col caricamento');
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            document.getElementById('shipments-container').innerHTML = data;
+                        })
+                        .catch(error => {
+                            document.getElementById('shipments-container').innerHTML = '<p>Errore nel caricamento della spedizione.</p>';
+                        });
+                } else {
+                    alert("Inserisci un ID di spedizione valido.");
+                }
+            });
         });
     </script>
 }
