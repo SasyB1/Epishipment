@@ -98,21 +98,16 @@ namespace Epishipment.Services
             return null;
         }
 
-        public IEnumerable<Shipment> GetShipments()
+        public List<Shipment> GetShipments()
         {
             List<Shipment> shipments = new List<Shipment>();
-
             try
             {
-                string connectionString = _config.GetConnectionString("DefaultConnection");
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
                 {
                     conn.Open();
-
-                    string SELECT_ALL_CMD = "SELECT ShipmentId, CustomerId, ShipmentDate, ShipmentDestinationCity, ShipmentNumber, ShipmentWeight, ShipmentPrice, ShipmentDateExpected FROM Shipments";
-
-                    using (SqlCommand cmd = new SqlCommand(SELECT_ALL_CMD, conn))
+                    const string SELECT_CMD = "SELECT ShipmentId, CustomerId, ShipmentDate, ShipmentDestinationCity, ShipmentNumber, ShipmentWeight, ShipmentPrice, ShipmentDateExpected FROM Shipments";
+                    using (SqlCommand cmd = new SqlCommand(SELECT_CMD, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -129,7 +124,6 @@ namespace Epishipment.Services
                                     ShipmentPrice = reader.GetDecimal(6),
                                     ShipmentDateExpected = reader.GetDateTime(7)
                                 };
-
                                 shipments.Add(shipment);
                             }
                         }
@@ -138,11 +132,11 @@ namespace Epishipment.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("Si è verificato un errore durante il tentativo di recuperare le spedizioni", ex);
+                throw new Exception("An error occurred while trying to get the shipments", ex);
             }
-
             return shipments;
         }
+
 
         public List<Shipment> GetShipmentsByDate(DateTime date)
         {
